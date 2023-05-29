@@ -14,35 +14,50 @@ const div       = document.getElementById('div');
 const sub       = document.getElementById('sub');
 const equal     = document.getElementById('equal');
 function math(){
+    let num = "";
     nine.addEventListener('click',()=>{
-        numscreen.textContent = "9";
+        num = num + "9";
+        numscreen.textContent = num;
+        
     });
     eight.addEventListener('click',()=>{
-        numscreen.textContent = "8";
+        num = num + "8";
+        numscreen.textContent = num;
     });
     seven.addEventListener('click',()=>{
-        numscreen.textContent = "7";
+        num = num + "7";
+        numscreen.textContent = num;
     });
     six.addEventListener('click',()=>{
-        numscreen.textContent = "6";
+        num = num + "6";
+        numscreen.textContent = num;
     });
     five.addEventListener('click',()=>{
-        numscreen.textContent = "5";
+        num = num + "5";
+        numscreen.textContent = num;
     });
     four.addEventListener('click',()=>{
-        numscreen.textContent = "4";
+        num = num + "4";
+        numscreen.textContent = num;
     });
     three.addEventListener('click',()=>{
-        numscreen.textContent = "3";
+        num = num + "3";
+        numscreen.textContent = num;
     });
     two.addEventListener('click',()=>{
-        numscreen.textContent = "2";
+        num = num + "2";
+        numscreen.textContent = num;
     });
     one.addEventListener('click',()=>{
-        numscreen.textContent = "1";
+        num = num + "1";
+        numscreen.textContent = num;
     });
     zero.addEventListener('click',()=>{
-        numscreen.textContent = "0";
+        if(num != ""){
+            num = num + "0";
+            numscreen.textContent = num;
+        }
+        
     });
 }
 
