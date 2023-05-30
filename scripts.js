@@ -1,4 +1,5 @@
 const numscreen = document.querySelector('.number');
+const equation  = document.querySelector('.equation'); 
 const nine      = document.getElementById('9');
 const eight     = document.getElementById('8');
 const seven     = document.getElementById('7');
@@ -12,9 +13,13 @@ const zero      = document.getElementById('0');
 const mul       = document.getElementById('mul');
 const div       = document.getElementById('div');
 const sub       = document.getElementById('sub');
+const plus       = document.getElementById('plus');
 const equal     = document.getElementById('equal');
 function math(){
     let num = "";
+    let numA = "";
+    let middle = "";
+    let numB = "";
     nine.addEventListener('click',()=>{
         num = num + "9";
         numscreen.textContent = num;
@@ -58,6 +63,26 @@ function math(){
             numscreen.textContent = num;
         }
         
+    });
+
+    plus.addEventListener('click',()=>{
+        if(num != "" && numA == ""){
+            numA = num;
+            middle = "+"
+            num = "";
+            equation.textContent = numscreen.textContent + " + ";
+        }
+    });
+    equal.addEventListener('click',()=>{
+        console.log("work");
+        if(middle == "+"){
+            
+            equation.textContent = equation.textContent + num + " = ";
+            num = parseInt(numA) + parseInt(num);
+            numscreen.textContent = parseInt(num);
+            console.log(num);
+        }
+
     });
 }
 
