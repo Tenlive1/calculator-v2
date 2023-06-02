@@ -36,22 +36,30 @@ function math(){
     
     equal.addEventListener('click',()=>{
         done = true;
+        if(num == ""){
+            num = numscreen.textContent;
+            console.log(num);
+        }
         equation.textContent = numA + " " + middle + " " + num + " = ";
-        if(middle == "+"){
-            numA = parseInt(numA) + parseInt(num);
-        }
-        else if(middle == "-"){
-            numA = parseInt(numA) - parseInt(num);
-        }else if(middle == "*"){
-            numA = parseInt(numA) * parseInt(num);
-        }else if(middle == "/"){
-            numA = parseInt(numA) / parseInt(num);
-        }
-        
+        numA = operation(numA,num,middle);
         numscreen.textContent = parseInt(numA);
 
     });
     
+}
+
+function operation(numA,num,middle){
+    if(middle == "+"){
+        numA = parseInt(numA) + parseInt(num);
+    }
+    else if(middle == "-"){
+        numA = parseInt(numA) - parseInt(num);
+    }else if(middle == "*"){
+        numA = parseInt(numA) * parseInt(num);
+    }else if(middle == "/"){
+        numA = parseInt(numA) / parseInt(num);
+    }
+    return numA;
 }
 
 math();
