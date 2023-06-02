@@ -4,6 +4,8 @@ const numbers    = document.querySelectorAll('.number-button');
 const symbols   = document.querySelectorAll('.symbol');
 const equal     = document.getElementById('equal');
 const clear     = document.querySelector('#clear');
+const back      = document.querySelector('#backspace');
+
 function math(){
     let num = "";
     let numA = "";
@@ -17,6 +19,12 @@ function math(){
         numA = "";
         middle = "";
         done = false;
+    });
+    back.addEventListener('click',()=>{
+        if(num.length !== 0){
+            num = num.substring(0,num.length-1);
+            numscreen.textContent = num;
+        }
     });
     numbers.forEach(numbutton => {
         numbutton.addEventListener('click',()=>{
