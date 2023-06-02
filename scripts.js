@@ -3,12 +3,21 @@ const equation  = document.querySelector('.equation');
 const numbers    = document.querySelectorAll('.number-button');
 const symbols   = document.querySelectorAll('.symbol');
 const equal     = document.getElementById('equal');
+const clear     = document.querySelector('#clear');
 function math(){
     let num = "";
     let numA = "";
     let middle = "";
     let done = false;
 
+    clear.addEventListener('click',()=>{
+        num = "";
+        equation.textContent = "";
+        numscreen.textContent = "";
+        numA = "";
+        middle = "";
+        done = false;
+    });
     numbers.forEach(numbutton => {
         numbutton.addEventListener('click',()=>{
             if(done){
@@ -29,7 +38,12 @@ function math(){
                 numA = num;
                 middle = symbutton.id
                 num = "";
-                equation.textContent = numA + " " + middle + " ";
+                equation.textContent = numA + " " + middle;
+            }
+            else if(numA != "" && num != ""){
+                numA = operation(numA,num,middle);
+                equation.textContent = numA + " " + middle;
+                numscreen.textContent = parseInt(numA);
             }
         })
     });
@@ -38,7 +52,6 @@ function math(){
         done = true;
         if(num == ""){
             num = numscreen.textContent;
-            console.log(num);
         }
         equation.textContent = numA + " " + middle + " " + num + " = ";
         numA = operation(numA,num,middle);
@@ -48,7 +61,7 @@ function math(){
     
 }
 
-function operation(numA,num,middle){
+function operation(numA,num,middle){// this will do all of the math so this way i don't have to copy and paste the if statement
     if(middle == "+"){
         numA = parseInt(numA) + parseInt(num);
     }
