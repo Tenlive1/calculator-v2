@@ -7,9 +7,17 @@ function math(){
     let num = "";
     let numA = "";
     let middle = "";
+    let done = false;
 
     numbers.forEach(numbutton => {
         numbutton.addEventListener('click',()=>{
+            if(done){
+                num = "";
+                equation.textContent = "";
+                numscreen.textContent = "";
+                numA = "";
+                done = false;
+            }
             num = num + numbutton.id;
             numscreen.textContent = num;
         });        
@@ -21,7 +29,7 @@ function math(){
                 numA = num;
                 middle = symbutton.id
                 num = "";
-                equation.textContent = numscreen.textContent + " " + middle + " ";
+                equation.textContent = numA + " " + middle + " ";
             }
         })
     });
@@ -30,13 +38,14 @@ function math(){
         done = true;
         if(middle == "+"){
             
-            equation.textContent = equation.textContent + num + " = ";
-            num = parseInt(numA) + parseInt(num);
-            numscreen.textContent = parseInt(num);
+            equation.textContent = numA + " " + middle + " " + num + " = ";
+            numA = parseInt(numA) + parseInt(num);
+            numscreen.textContent = parseInt(numA);
             
         }
 
     });
+    
 }
 
 math();
