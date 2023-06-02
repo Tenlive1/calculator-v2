@@ -34,18 +34,21 @@ function math(){
 
     symbols.forEach(symbutton => {
         symbutton.addEventListener('click',()=>{
-            if(num != "" && numA === ""){
+            
+            if(numA === "" && num != ""){
                 numA = num;
-                middle = symbutton.id
-                num = "";
-                equation.textContent = numA + " " + middle;
             }
             else if(numA !== "" && num != ""){
-                numA = operation(numA,num,middle);
-                equation.textContent = numA + " " + middle;
+                numA = operation(numA,num,middle); 
                 numscreen.textContent = parseInt(numA);
-                num = "";
+                
+            }else if(numA !== "" && num !== ""){
+                numA = operation(numA,num,middle);
+                numscreen.textContent = parseInt(numA);
             }
+            middle = symbutton.id;
+            equation.textContent = numA + " " + middle;
+            num = "";
         })
     });
     
