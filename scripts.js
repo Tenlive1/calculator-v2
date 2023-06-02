@@ -36,13 +36,19 @@ function math(){
     
     equal.addEventListener('click',()=>{
         done = true;
+        equation.textContent = numA + " " + middle + " " + num + " = ";
         if(middle == "+"){
-            
-            equation.textContent = numA + " " + middle + " " + num + " = ";
             numA = parseInt(numA) + parseInt(num);
-            numscreen.textContent = parseInt(numA);
-            
         }
+        else if(middle == "-"){
+            numA = parseInt(numA) - parseInt(num);
+        }else if(middle == "*"){
+            numA = parseInt(numA) * parseInt(num);
+        }else if(middle == "/"){
+            numA = parseInt(numA) / parseInt(num);
+        }
+        
+        numscreen.textContent = parseInt(numA);
 
     });
     
