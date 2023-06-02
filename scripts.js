@@ -34,16 +34,17 @@ function math(){
 
     symbols.forEach(symbutton => {
         symbutton.addEventListener('click',()=>{
-            if(num != "" && numA == ""){
+            if(num != "" && numA === ""){
                 numA = num;
                 middle = symbutton.id
                 num = "";
                 equation.textContent = numA + " " + middle;
             }
-            else if(numA != "" && num != ""){
+            else if(numA !== "" && num != ""){
                 numA = operation(numA,num,middle);
                 equation.textContent = numA + " " + middle;
                 numscreen.textContent = parseInt(numA);
+                num = "";
             }
         })
     });
