@@ -20,26 +20,12 @@ function math(){
     });
 
     back.addEventListener('click',()=>{// this will delete one number at a time
-        // if(equation.textContent.includes("=")){
-        //     equation.textContent = "";
-        //     done = true;
-        // }else if(num.length !== 1 && num !== "0" && done == false){// this will delete one number at a time until there's a single number
-        //     num = num.substring(0,num.length-1);
-        //     numscreen.textContent = num;
-        // }else if (num.length == 1 && done == false && numA === ""){// if there's a single number the computer will change it back to 0
-        //     num = "0";
-        //     numscreen.textContent = num;
-        //     done = true;
-        // }else if(num.length == 1 && done == false && numA !== ""){
-        //     num = "0";
-        //     numscreen.textContent = num;
-        // }
         if(num.length > 1){// this will delete one number at a time until there's a single number
                 num = num.substring(0,num.length-1);
                 numscreen.textContent = num;
                 console.log("work");
         }
-        else if(num.length == 1 && num !== ""){
+        else if(num.length == 1 && num !== ""){// when the length of the number is 1 it will turn that number into 0/ show the user that it is now 0
                 num = "";
                 numscreen.textContent = 0;
         }else if(equation.textContent.includes("=") && middle !== ""){
@@ -69,7 +55,7 @@ function math(){
                 numA = num;// user wanting a second number
                 
             }
-            else if(numA !== "" && num !== ""){// when they want to evaluate more than 2 number
+            else if(numA !== "" && num !== "" && !equation.textContent.includes("=")){// when they want to evaluate more than 2 number
                 numA = operation(numA,num,middle); 
                 numscreen.textContent = parseInt(numA);
             }
@@ -84,11 +70,17 @@ function math(){
             numA = num;
             equation.textContent = numA + " = ";
             numscreen.textContent = parseInt(numA);
-        }else{//evaluating 2 number with an operation
+        }else if(middle !== "" && num === ""){
             equation.textContent = numA + " " + middle + " " + numscreen.textContent + " = ";
             numA = operation(numA,numscreen.textContent,middle);
+            num = numscreen.textContent;
             numscreen.textContent = parseInt(numA);
-            num = "";
+            
+        }
+        else{//evaluating 2 number with an operation
+            equation.textContent = numA + " " + middle + " " + num + " = ";
+            numA = operation(numA,num,middle);
+            numscreen.textContent = parseInt(numA);
         }
 
     });
