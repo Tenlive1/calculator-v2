@@ -36,18 +36,18 @@ function math(){
         //     num = "0";
         //     numscreen.textContent = num;
         // }
-        
+        if(num.length !== 1){// this will delete one number at a time until there's a single number
+                num = num.substring(0,num.length-1);
+                numscreen.textContent = num;
+        }
+        // else if(num.length == 1 && numA !== ""){
+        //         num = "0";
+        //         numscreen.textContent = num;
+        // }
     });
 
     numbers.forEach(numbutton => {// this will display what ever number that user have click
         numbutton.addEventListener('click',()=>{
-            // if(done){// this will basically change the current input to be nothing like a reset
-            //     num = "";
-            //     equation.textContent = "";
-            //     numscreen.textContent = "";
-            //     numA = "";
-            //     done = false;
-            // }
             if(num === "0"){ // when num is 0 it's basically nothing
                 num = "";
             }else if(equation.textContent.includes("=") && middle !== ""){// if there's an equal and a operation than reset everything
@@ -65,10 +65,10 @@ function math(){
         symbutton.addEventListener('click',()=>{
             
             if(numA === "" && num !== ""){// basically numA will hold onto num value
-                numA = num;
+                numA = num;// user wanting a second number
                 
             }
-            else if(numA !== "" && num !== ""){// this is what happen when they are not done using the operation but also enter the number as well ex 6+6+6
+            else if(numA !== "" && num !== ""){// when they want to evaluate more than 2 number
                 numA = operation(numA,num,middle); 
                 numscreen.textContent = parseInt(numA);
             }
@@ -80,11 +80,11 @@ function math(){
     });
     
     equal.addEventListener('click',()=>{ // displaying the answer when user have click equal
-        if(middle === "" && numA === ""){
+        if(middle === "" && numA === ""){// evaluating a single number
             numA = num;
             equation.textContent = numA + " = ";
             numscreen.textContent = parseInt(numA);
-        }else{
+        }else{//evaluating 2 number with an operation
             equation.textContent = numA + " " + middle + " " + numscreen.textContent + " = ";
             numA = operation(numA,numscreen.textContent,middle);
             numscreen.textContent = parseInt(numA);
