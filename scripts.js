@@ -10,7 +10,7 @@ function math(){
     let num = "0";// this is current input
     let numA = "";// this will hold the number
     let middle = "";// this will hold the operation
-    let done = true;// this will let the computer to know when the current input can be change to the number that user wanted
+    let done = false;// this will let the computer to know when the current input can be change to the number that user wanted
 
     clear.addEventListener('click',()=>{// the user click on clear it will
         num = "0";// set the current input to be 0
@@ -22,24 +22,39 @@ function math(){
     });
 
     back.addEventListener('click',()=>{// this will delete one number at a time
-        if(num.length !== 1 && num !== "0"){// this will delete one number at a time until there's a single number
-            num = num.substring(0,num.length-1);
-            numscreen.textContent = num;
-        }else{// if there's a single number the computer will change it back to 0
-            num = "0";
-            numscreen.textContent = num;
-            done = true;
-        }
+        // if(equation.textContent.includes("=")){
+        //     equation.textContent = "";
+        //     done = true;
+        // }else if(num.length !== 1 && num !== "0" && done == false){// this will delete one number at a time until there's a single number
+        //     num = num.substring(0,num.length-1);
+        //     numscreen.textContent = num;
+        // }else if (num.length == 1 && done == false && numA === ""){// if there's a single number the computer will change it back to 0
+        //     num = "0";
+        //     numscreen.textContent = num;
+        //     done = true;
+        // }else if(num.length == 1 && done == false && numA !== ""){
+        //     num = "0";
+        //     numscreen.textContent = num;
+        // }
+        
     });
 
     numbers.forEach(numbutton => {// this will display what ever number that user have click
         numbutton.addEventListener('click',()=>{
-            if(done){// this will basically change the current input to be nothing like a reset
+            // if(done){// this will basically change the current input to be nothing like a reset
+            //     num = "";
+            //     equation.textContent = "";
+            //     numscreen.textContent = "";
+            //     numA = "";
+            //     done = false;
+            // }
+            if(num === "0"){ // when num is 0 it's basically nothing
                 num = "";
+            }else if(equation.textContent.includes("=") && middle !== ""){// if there's an equal and a operation than reset everything
+                num = "";
+                numA = "";
                 equation.textContent = "";
                 numscreen.textContent = "";
-                numA = "";
-                done = false;
             }
             num = num + numbutton.id;
             numscreen.textContent = num;// user will see the number in screen
@@ -56,27 +71,25 @@ function math(){
             else if(numA !== "" && num !== ""){// this is what happen when they are not done using the operation but also enter the number as well ex 6+6+6
                 numA = operation(numA,num,middle); 
                 numscreen.textContent = parseInt(numA);
-                
             }
             middle = symbutton.id;//middle will be whatever operation that user have clicked
             equation.textContent = numA + " " + middle;// this will display what user have clicked
-            num = "";//current will be nothing
+            num = "";
             done = false;
         })
     });
     
     equal.addEventListener('click',()=>{ // displaying the answer when user have click equal
-        if(middle == "" && numA === ""){
-            equation.textContent = num + " = ";
-            numscreen.textContent = parseInt(num);
+        if(middle === "" && numA === ""){
+            numA = num;
+            equation.textContent = numA + " = ";
+            numscreen.textContent = parseInt(numA);
         }else{
-            done = true;
-            equation.textContent = numA + " " + middle + " " + num + " = ";
-            numA = operation(numA,num,middle);
+            equation.textContent = numA + " " + middle + " " + numscreen.textContent + " = ";
+            numA = operation(numA,numscreen.textContent,middle);
             numscreen.textContent = parseInt(numA);
             num = "";
         }
-        
 
     });
     
