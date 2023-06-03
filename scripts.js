@@ -10,7 +10,6 @@ function math(){
     let num = "0";// this is current input
     let numA = "";// this will hold the number
     let middle = "";// this will hold the operation
-    let done = false;// this will let the computer to know when the current input can be change to the number that user wanted
 
     clear.addEventListener('click',()=>{// the user click on clear it will
         num = "0";// set the current input to be 0
@@ -18,7 +17,6 @@ function math(){
         numscreen.textContent = num;// let the user see that it is reset to 0
         numA = ""; // value is reset
         middle = ""; // operation is reset
-        done = true; // this will allow the user to see that 0 will turn into what ever number they have enter
     });
 
     back.addEventListener('click',()=>{// this will delete one number at a time
@@ -36,14 +34,17 @@ function math(){
         //     num = "0";
         //     numscreen.textContent = num;
         // }
-        if(num.length !== 1){// this will delete one number at a time until there's a single number
+        if(num.length > 1){// this will delete one number at a time until there's a single number
                 num = num.substring(0,num.length-1);
                 numscreen.textContent = num;
+                console.log("work");
         }
-        // else if(num.length == 1 && numA !== ""){
-        //         num = "0";
-        //         numscreen.textContent = num;
-        // }
+        else if(num.length == 1 && num !== ""){
+                num = "";
+                numscreen.textContent = 0;
+        }else if(equation.textContent.includes("=") && middle !== ""){
+            equation.textContent = "";
+        }
     });
 
     numbers.forEach(numbutton => {// this will display what ever number that user have click
@@ -75,7 +76,6 @@ function math(){
             middle = symbutton.id;//middle will be whatever operation that user have clicked
             equation.textContent = numA + " " + middle;// this will display what user have clicked
             num = "";
-            done = false;
         })
     });
     
