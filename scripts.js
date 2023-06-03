@@ -24,13 +24,14 @@ function math(){
         if(num.length > 1){// this will delete one number at a time until there's a single number
                 num = num.substring(0,num.length-1);
                 numscreen.textContent = num;
-                console.log("work");
+        }
+        else if(equation.textContent.includes("=") && middle !== ""){
+            equation.textContent = "";
+            num = "";
         }
         else if(num.length == 1 && num !== ""){// when the length of the number is 1 it will turn that number into 0/ show the user that it is now 0
                 num = "";
                 numscreen.textContent = 0;
-        }else if(equation.textContent.includes("=") && middle !== ""){
-            equation.textContent = "";
         }
     });
 
@@ -95,7 +96,6 @@ function math(){
             numA = "";
             numscreen.textContent = num;
         }else if(num !== "0"){
-            console.log("work");
             num = -num;
             numscreen.textContent = num;
         }
