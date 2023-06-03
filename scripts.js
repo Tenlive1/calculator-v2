@@ -5,6 +5,7 @@ const symbols   = document.querySelectorAll('.symbol');
 const equal     = document.getElementById('equal');
 const clear     = document.querySelector('#clear');
 const back      = document.querySelector('#backspace');
+const sign      = document.querySelector('#pos-neg');
 
 function math(){
     let num = "0";// this is current input
@@ -83,6 +84,21 @@ function math(){
             numscreen.textContent = parseInt(numA);
         }
 
+    });
+
+    sign.addEventListener('click',()=>{
+        
+        if(equation.textContent.includes('=') && middle !== ""){
+            num = -numscreen.textContent;
+            equation.textContent = ""
+            middle = "";
+            numA = "";
+            numscreen.textContent = num;
+        }else if(num !== "0"){
+            console.log("work");
+            num = -num;
+            numscreen.textContent = num;
+        }
     });
     
 }
