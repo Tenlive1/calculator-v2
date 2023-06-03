@@ -95,7 +95,11 @@ function math(){
             middle = "";
             numA = "";
             numscreen.textContent = num;
-        }else if(num !== "0"){
+        }else if(numA !== ""){
+            num = -numscreen.textContent;
+            numscreen.textContent = num;
+        }  
+        else if(num !== "0"){
             num = -num;
             numscreen.textContent = num;
         }
