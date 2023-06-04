@@ -64,4 +64,16 @@ button{
     align-items: center;
     justify-content: center;
     flex-basis: 100%;
+    border-radius: 10%;
+    border: 1px solid black;
+    background-color: #E76F51;
+}
+button:hover{
+    background-color: #F4A261;
+}
+button#clear:hover{
+    background-color: #2A9D8F;
+}
+button#backspace:hover{
+    background-color: #2A9D8F;
 }
