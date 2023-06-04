@@ -7,22 +7,61 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #E9C46A;
 }
 #cal-body{
     height: 600px;
     width: 500px;
-    background-color: lightgray;
+    background-color: #264653;
     display: flex;
     align-items: center;
     flex-direction: column;
+    border: 1px solid black;
+
     
 }
 #cal-screen{
-    background-color: gray;
     height: 100px;
     width: 480px;
     margin-top: 10px;
+    display: flex;
+    flex-direction: column;
 }
 #button-container{
     margin-top: 10px;
+    margin-bottom: 10px;
+    width: 480px;
+
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+}
+
+/*-------------------------*/
+.equation{
+    display: flex;
+    justify-content: flex-end;
+    flex-basis: 25%;
+    font-size: 18px;
+    color: #ffffff;
+}
+.number-screen{
+    display: flex;
+    justify-content: flex-end;
+    flex-basis: 75%;
+    color: #000000;
+    font-size: 64px;
+}
+.row{
+    display: flex;
+    flex-basis: 100%;
+    justify-content: space-around;
+    gap: 1px;
+    margin: 1px;
+}
+button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-basis: 100%;
 }
