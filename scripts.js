@@ -48,6 +48,7 @@ function math(){
             }
             num = num + numbutton.id;
             numscreen.textContent = num;// user will see the number in screen
+            checkover();
         });        
     });
 
@@ -128,5 +129,16 @@ function operation(numA,num,middle){// this will do all of the math so this way 
     }
     return numA;
 }
-
+const h = numscreen.offsetHeight;
+let og = numscreen.style.fontSize;
+function checkover(){
+    const box = numscreen.getBoundingClientRect();
+    if(box.height !== h){
+        console.log(box.height);
+        numscreen.style.fontSize = "60px";
+    }else{
+        console.log(h);
+        numscreen.style.fontSize = "64px";
+    }
+}
 math();

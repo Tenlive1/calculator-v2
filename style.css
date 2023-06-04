@@ -51,6 +51,7 @@ body{
     flex-basis: 75%;
     color: #000000;
     font-size: 64px;
+    word-break: break-all;
 }
 .row{
     display: flex;
@@ -71,9 +72,7 @@ button{
 button:hover{
     background-color: #F4A261;
 }
-button#clear:hover{
+button#clear:hover, button#backspace:hover{
     background-color: #2A9D8F;
 }
-button#backspace:hover{
-    background-color: #2A9D8F;
-}
+
