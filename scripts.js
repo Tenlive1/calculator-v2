@@ -38,17 +38,18 @@ function math(){
 
     numbers.forEach(numbutton => {// this will display what ever number that user have click
         numbutton.addEventListener('click',()=>{
-            if(num === "0"){ // when num is 0 it's basically nothing
-                num = "";
-            }else if(equation.textContent.includes("=") && middle !== ""){// if there's an equal and a operation than reset everything
-                num = "";
-                numA = "";
-                equation.textContent = "";
-                numscreen.textContent = "";
+            if(num.length !== 15){
+                if(num === "0"){ // when num is 0 it's basically nothing
+                    num = "";
+                }else if(equation.textContent.includes("=") && middle !== ""){// if there's an equal and a operation than reset everything
+                    num = "";
+                    numA = "";
+                    equation.textContent = "";
+                    numscreen.textContent = "";
+                }
+                num = num + numbutton.id;
+                numscreen.textContent = num;// user will see the number in screen
             }
-            num = num + numbutton.id;
-            numscreen.textContent = num;// user will see the number in screen
-            checkover();
         });        
     });
 
@@ -127,18 +128,12 @@ function operation(numA,num,middle){// this will do all of the math so this way 
     }else if(middle == "/"){
         numA = numA / num;
     }
+
+    if(numA >= 1000000000000000){
+        return numA.toExponential();
+    }
+
     return numA;
 }
-const h = numscreen.offsetHeight;
-let og = numscreen.style.fontSize;
-function checkover(){
-    const box = numscreen.getBoundingClientRect();
-    if(box.height !== h){
-        console.log(box.height);
-        numscreen.style.fontSize = "60px";
-    }else{
-        console.log(h);
-        numscreen.style.fontSize = "64px";
-    }
-}
+
 math();
