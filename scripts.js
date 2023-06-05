@@ -26,8 +26,17 @@ function math(){
     });
 
     back.addEventListener('click',()=>{// this will delete one number at a time
-        if(num.length > 1){// this will delete one number at a time until there's a single number
-                num = num.substring(0,num.length-1);
+        if(numA == "Cannot divide by zero"){
+            num = "0";// set the current input to be 0
+            equation.textContent = ""; // set the equation to be nothing
+            numtext.textContent = num;// let the user see that it is reset to 0
+            numA = ""; // value is reset
+            middle = ""; // operation is reset
+            counter = 0;
+            numtext.style.fontSize = "78px"
+        }
+        if(numtext.textContent.length > 1){// this will delete one number at a time until there's a single number
+                num = numtext.textContent.substring(0,numtext.textContent.length-1);
                 numtext.textContent = num;
         }
         else if(equation.textContent.includes("=") && middle !== ""){
@@ -66,87 +75,102 @@ function math(){
                     numtext.textContent = num;// user will see the number in screen
                     resize();
                 }
+                if (numA ==="Cannot divide by zero"){
+                    numA = "";
+                    equation.textContent = "";
+                    numA = ""; // value is reset
+                    middle = ""; // operation is reset
+                    counter = 0;
+                    numtext.style.fontSize = "78px";
+                }
             
         });        
     });
 
     symbols.forEach(symbutton => {// displaying the user operations
         symbutton.addEventListener('click',()=>{
-            
-            if(numA === "" && num !== ""){// basically numA will hold onto num value
-                numA = num;// user wanting a second number
+            if(numA !=="Cannot divide by zero"){
+                if(numA === "" && num !== ""){// basically numA will hold onto num value
+                    numA = num;// user wanting a second number
+                    
+                }
+                else if(numA !== "" && num !== "" && !equation.textContent.includes("=")){// when they want to evaluate more than 2 number
                 
+                    numA = operation(numA,num,middle); 
+                    numtext.textContent = numA;
+                    resize();
+                }
+                middle = symbutton.id;//middle will be whatever operation that user have clicked
+                equation.textContent = numA + " " + middle;// this will display what user have clicked
+                num = "";
+                counter = 0;
             }
-            else if(numA !== "" && num !== "" && !equation.textContent.includes("=")){// when they want to evaluate more than 2 number
-                numA = operation(numA,num,middle); 
-                numtext.textContent = numA;
-            }
-            middle = symbutton.id;//middle will be whatever operation that user have clicked
-            equation.textContent = numA + " " + middle;// this will display what user have clicked
-            num = "";
-            counter = 0;
         })
     });
     
     equal.addEventListener('click',()=>{ // displaying the answer when user have click equal
-        if(middle === "" && numA === ""){// evaluating a single number
-            numA = num;
-            equation.textContent = numA + " = ";
-            numtext.textContent = numA;
+        if(numA !=="Cannot divide by zero"){
+            if(middle === "" && numA === ""){// evaluating a single number
+                numA = num;
+                equation.textContent = numA + " = ";
+                numtext.textContent = numA;
+                numtext.style.fontSize = "78px";
 
-        }else if(middle !== "" && num === ""){
-            equation.textContent = numA + " " + middle + " " + numtext.textContent + " = ";
-            numA = operation(numA,numtext.textContent,middle);
-            num = numtext.textContent;
-            numtext.textContent = numA;
-            
-        }
-        else{//evaluating 2 number with an operation
-            equation.textContent = numA + " " + middle + " " + num + " = ";
-            numA = operation(numA,num,middle);
-            numtext.textContent = numA;
+            }else if(middle !== "" && num === ""){
+                equation.textContent = numA + " " + middle + " " + numtext.textContent + " = ";
+                numA = operation(numA,numtext.textContent,middle);
+                num = numtext.textContent;
+                numtext.textContent = numA;
+                
+            }
+            else{//evaluating 2 number with an operation
+                equation.textContent = numA + " " + middle + " " + num + " = ";
+                numA = operation(numA,num,middle);
+                numtext.textContent = numA;
+            }
+            resize();
         }
 
     });
 
     sign.addEventListener('click',()=>{
-        
-        if(equation.textContent.includes('=') && middle !== ""){
-            num = -numtext.textContent;
-            equation.textContent = ""
-            middle = "";
-            numA = "";
-            numtext.textContent = num;
-        }else if(numA !== ""){
-            num = -parseFloat(numtext.textContent);
-            numtext.textContent = num;
-        }  
-        else if(num !== "0"){
-            num = -num;
-            numtext.textContent = num;
+        if(numA !=="Cannot divide by zero"){
+            if(equation.textContent.includes('=') && middle !== ""){
+                num = -numtext.textContent;
+                equation.textContent = ""
+                middle = "";
+                numA = "";
+                numtext.textContent = num;
+            }else if(numA !== ""){
+                num = -parseFloat(numtext.textContent);
+                numtext.textContent = num;
+            }  
+            else if(num !== "0"){
+                num = -num;
+                numtext.textContent = num;
+            }
+            if(blank == 1){
+                resize();
+                blank=-blank;
+            }else{
+                insize();
+                blank=-blank;
+            }
         }
-        if(blank == 1){
-            resize();
-            blank=-blank;
-        }else{
-            insize();
-            blank=-blank;
-        }
-        
     });
     dec.addEventListener('click',()=>{
-        if(!numtext.textContent.includes('.')){
-            num = num + ".";
-            numtext.textContent = num;
-            resize();
+        if(numA !=="Cannot divide by zero"){
+            if(!numtext.textContent.includes('.')){
+                num = num + ".";
+                numtext.textContent = num;
+                resize();
+            }
         }
-        
     });
     
 }
 
 function operation(numA,num,middle){// this will do all of the math so this way i don't have to copy and paste the if statement
-    
     if(middle == "+"){
         numA =  parseFloat(numA) + parseFloat(num);
     }
@@ -155,7 +179,11 @@ function operation(numA,num,middle){// this will do all of the math so this way 
     }else if(middle == "*"){
         numA = numA * num;
     }else if(middle == "/"){
+        if(num === "0"){
+            numA = "Cannot divide by zero";
+        }else
         numA = numA / num;
+        
     }
     if(numA >= 10000000000000 ){
         return numA.toExponential(3);
