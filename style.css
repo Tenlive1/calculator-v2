@@ -50,8 +50,9 @@ body{
     justify-content: flex-end;
     flex-basis: 75%;
     color: #000000;
-    font-size: 64px;
+    
     word-break: break-all;
+    width: 100%;
 }
 .row{
     display: flex;

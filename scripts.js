@@ -1,4 +1,5 @@
 const numscreen = document.querySelector('.number-screen');
+const numtext   = document.querySelector('.num-text');
 const equation  = document.querySelector('.equation'); 
 const numbers   = document.querySelectorAll('.number-button');
 const symbols   = document.querySelectorAll('.symbol');
@@ -7,7 +8,9 @@ const clear     = document.querySelector('#clear');
 const back      = document.querySelector('#backspace');
 const sign      = document.querySelector('#pos-neg');
 const dec       = document.querySelector('#decimal');
-
+let counter = 0;
+let blank = 1;
+numtext.style.fontSize = "78px"
 function math(){
     let num = "0";// this is current input
     let numA = "";// this will hold the number
@@ -16,15 +19,16 @@ function math(){
     clear.addEventListener('click',()=>{// the user click on clear it will
         num = "0";// set the current input to be 0
         equation.textContent = ""; // set the equation to be nothing
-        numscreen.textContent = num;// let the user see that it is reset to 0
+        numtext.textContent = num;// let the user see that it is reset to 0
         numA = ""; // value is reset
         middle = ""; // operation is reset
+        counter = 0;
     });
 
     back.addEventListener('click',()=>{// this will delete one number at a time
         if(num.length > 1){// this will delete one number at a time until there's a single number
                 num = num.substring(0,num.length-1);
-                numscreen.textContent = num;
+                numtext.textContent = num;
         }
         else if(equation.textContent.includes("=") && middle !== ""){
             equation.textContent = "";
@@ -32,24 +36,37 @@ function math(){
         }
         else if(num.length == 1 && num !== ""){// when the length of the number is 1 it will turn that number into 0/ show the user that it is now 0
                 num = "";
-                numscreen.textContent = 0;
+                numtext.textContent = 0;
         }
+        if(counter > 0){
+            counter--;
+        }
+        insize();
+        console.log(numtext.clientWidth);
     });
 
     numbers.forEach(numbutton => {// this will display what ever number that user have click
         numbutton.addEventListener('click',()=>{
-            if(num.length !== 15){
+            
+                
                 if(num === "0"){ // when num is 0 it's basically nothing
                     num = "";
+                    count = 0;
                 }else if(equation.textContent.includes("=") && middle !== ""){// if there's an equal and a operation than reset everything
                     num = "";
                     numA = "";
                     equation.textContent = "";
-                    numscreen.textContent = "";
+                    numtext.textContent = "";
+                    counter = 0;
                 }
-                num = num + numbutton.id;
-                numscreen.textContent = num;// user will see the number in screen
-            }
+
+                if(counter < 15){
+                    counter++;
+                    num = num + numbutton.id;
+                    numtext.textContent = num;// user will see the number in screen
+                    resize();
+                }
+            
         });        
     });
 
@@ -62,11 +79,12 @@ function math(){
             }
             else if(numA !== "" && num !== "" && !equation.textContent.includes("=")){// when they want to evaluate more than 2 number
                 numA = operation(numA,num,middle); 
-                numscreen.textContent = numA;
+                numtext.textContent = numA;
             }
             middle = symbutton.id;//middle will be whatever operation that user have clicked
             equation.textContent = numA + " " + middle;// this will display what user have clicked
             num = "";
+            counter = 0;
         })
     });
     
@@ -74,18 +92,19 @@ function math(){
         if(middle === "" && numA === ""){// evaluating a single number
             numA = num;
             equation.textContent = numA + " = ";
-            numscreen.textContent = numA;
+            numtext.textContent = numA;
+
         }else if(middle !== "" && num === ""){
-            equation.textContent = numA + " " + middle + " " + numscreen.textContent + " = ";
-            numA = operation(numA,numscreen.textContent,middle);
-            num = numscreen.textContent;
-            numscreen.textContent = numA;
+            equation.textContent = numA + " " + middle + " " + numtext.textContent + " = ";
+            numA = operation(numA,numtext.textContent,middle);
+            num = numtext.textContent;
+            numtext.textContent = numA;
             
         }
         else{//evaluating 2 number with an operation
             equation.textContent = numA + " " + middle + " " + num + " = ";
             numA = operation(numA,num,middle);
-            numscreen.textContent = numA;
+            numtext.textContent = numA;
         }
 
     });
@@ -93,25 +112,35 @@ function math(){
     sign.addEventListener('click',()=>{
         
         if(equation.textContent.includes('=') && middle !== ""){
-            num = -numscreen.textContent;
+            num = -numtext.textContent;
             equation.textContent = ""
             middle = "";
             numA = "";
-            numscreen.textContent = num;
+            numtext.textContent = num;
         }else if(numA !== ""){
-            num = -numscreen.textContent;
-            numscreen.textContent = num;
+            num = -parseFloat(numtext.textContent);
+            numtext.textContent = num;
         }  
         else if(num !== "0"){
             num = -num;
-            numscreen.textContent = num;
+            numtext.textContent = num;
         }
+        if(blank == 1){
+            resize();
+            blank=-blank;
+        }else{
+            insize();
+            blank=-blank;
+        }
+        
     });
     dec.addEventListener('click',()=>{
-        if(!num.includes(".") || !numscreen.textContent.includes('.')){
+        if(!numtext.textContent.includes('.')){
             num = num + ".";
-            numscreen.textContent = num;
+            numtext.textContent = num;
+            resize();
         }
+        
     });
     
 }
@@ -128,12 +157,32 @@ function operation(numA,num,middle){// this will do all of the math so this way 
     }else if(middle == "/"){
         numA = numA / num;
     }
-
-    if(numA >= 1000000000000000){
-        return numA.toExponential();
+    if(numA >= 10000000000000 ){
+        return numA.toExponential(3);
+    }else if(numA <= -10000000000000){
+        return numA.toExponential(3);
     }
 
     return numA;
+}
+
+numtext.style.fontSize = "78px"
+let max = 0;
+function resize(){
+    max = numtext.clientWidth;
+    while(numtext.clientWidth === numscreen.clientWidth){
+        numtext.style.fontSize = parseInt(numtext.style.fontSize,10) - parseInt(1,10) + "px";   
+    }
+    console.log(max);
+}
+
+function insize(){
+    while(numtext.clientWidth !== numscreen.clientWidth && numtext.style.fontSize < "78px"){
+        numtext.style.fontSize = parseInt(numtext.style.fontSize,10) + parseInt(1,10) + "px";     
+    }
+    if(numtext.style.fontSize !== "78px"){
+        numtext.style.fontSize = parseInt(numtext.style.fontSize,10) - parseInt(1,10) + "px"; 
+    }
 }
 
 math();
